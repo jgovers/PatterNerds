@@ -20,7 +20,9 @@ d = im_mean(c); % compute mean
 d = prdataset(d,[],'featlab',char('mean-x','mean-y')); % place mean in dataset
 
 %% Image Processing
-x = im_features(a,a,'all');
+% x = im_features(b,b,'all');
+x1 = im_features(b,b,{'Area','Perimeter'});
+figure; scatterd(x1,'legend')
 
 %% Plot
 if doplots
@@ -30,6 +32,7 @@ if doplots
    figure; scatterd(d, 'legend') 
    showfigs
 end
+
 %% Old code
 % %% Image processing
 % % start up image processing library, download at http://www.diplib.org/download
