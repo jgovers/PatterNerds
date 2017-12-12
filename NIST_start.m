@@ -17,6 +17,8 @@ if firsttime
 end
 
 prwaitbar off
+% run('C:\Program Files\DIPimage 2.8.1\dipstart.m') % check if you have
+% dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
 num = prnist([0,1,2,3,4,5,6,7,8,9],[1:10]); % read in data
