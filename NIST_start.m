@@ -8,9 +8,10 @@
 clear all
 close all
 clc
+tic
 
 firsttime   = false;
-doplots     = false;
+doplots     = true;
 
 if firsttime 
     addpath(genpath(pwd))
@@ -19,12 +20,20 @@ end
 prwaitbar off
 
 %% Load in NIST-data
-num = prnist([0,1,2,3,4,5,6,7,8,9],[1:10]); % read in data
-num_box = im_box(num,[],1); % add bounding box to make all images same size
-num_box_dwn = im_resize(num_box,[25,25]); % Downsample
+toc
+% Training data
+num_tr          = prnist([0:9],[1:900]);             % Read in data
+num_tr_box      = im_box(num_tr,[],1);              % Add bounding box to make all images same size
+num_tr_box_dwn  = im_resize(num_tr_box,[25,25]);    % Downsample
+
+% Test data
+num_test         = prnist([0:9],[901:1000]);           % Read in data
+num_test_box     = im_box(num_test,[],1);           % Add bounding box to make all images same size
+num_test_box_dwn = im_resize(num_test_box,[25,25]); % Downsample
 
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
+toc
 
 % run class_pixeldata.m
 run class_features.m
