@@ -10,7 +10,7 @@ close all
 clc
 
 firsttime   = false;
-doplots     = true;
+doplots     = false;
 
 if firsttime 
     addpath(genpath(pwd))
@@ -26,6 +26,6 @@ num_box_dwn = im_resize(num_box,[25,25]); % Downsample
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
 
-run class_pixeldata.m
-% run class_features.m
+% run class_pixeldata.m
+run class_features.m
 % run class_dissimil.m
