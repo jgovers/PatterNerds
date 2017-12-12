@@ -22,14 +22,14 @@ prwaitbar off
 %% Load in NIST-data
 toc
 % Training data
-num_tr          = prnist([0:9],[1:900]);             % Read in data
-num_tr_box      = im_box(num_tr,[],1);              % Add bounding box to make all images same size
-num_tr_box_dwn  = im_resize(num_tr_box,[25,25]);    % Downsample
+num_trn          = prnist([0:9],[1:10]);             % Read in data
+num_trn_box      = im_box(num_trn,[],1);              % Add bounding box to make all images same size
+num_trn_box_dwn  = im_resize(num_trn_box,[25,25]);    % Downsample
 
 % Test data
-num_test         = prnist([0:9],[901:1000]);           % Read in data
-num_test_box     = im_box(num_test,[],1);           % Add bounding box to make all images same size
-num_test_box_dwn = im_resize(num_test_box,[25,25]); % Downsample
+num_tst         = prnist([0:9],[991:1000]);           % Read in data
+num_tst_box     = im_box(num_tst,[],1);           % Add bounding box to make all images same size
+num_tst_box_dwn = im_resize(num_tst_box,[25,25]); % Downsample
 
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
