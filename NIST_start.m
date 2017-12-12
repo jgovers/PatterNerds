@@ -26,6 +26,6 @@ num_box_dwn = im_resize(num_box,[25,25]); % Downsample
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
 
-class_pixeldata.m
-% class_features.m
-% class_dissimil.m
+run class_pixeldata.m
+% run class_features.m
+% run class_dissimil.m
