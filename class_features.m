@@ -2,15 +2,13 @@
 tic
 
 %% Image Processing
-x1 = im_features(num_box,num_box,{'Area','Centroid'});
-x2 = im_features(num_box,num_box,{'Perimeter','Eccentricity','EulerNumber'});
+x1 = im_features(num_box,num_box,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
 toc
 
 %% Plot
 if doplots
    figure; show(num_box);
    figure; scatterd(x1,3,'legend')
-   figure; scatterd(x2,3,'legend')
    showfigs
 end
 toc
