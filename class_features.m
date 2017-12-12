@@ -1,13 +1,13 @@
 %% Feature Extraction
 toc
 disp('Extracting training features...')
-x_trn   = im_features(num_trn_box,num_trn_box,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
+x_trn   = im_features(numset_trn,numset_trn,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
 x_trn_n = normc(+x_trn);
 x_trn_n = prdataset(x_trn_n,getlab(x_trn));
 
 toc
 disp('Extracting testing features...')
-x_tst   = im_features(num_tst_box,num_tst_box,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
+x_tst   = im_features(numset_tst,numset_tst,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
 x_tst_n = normc(+x_tst);
 x_tst_n = prdataset(x_tst_n,getlab(x_tst));
 
@@ -35,8 +35,8 @@ toc
 toc
 if doplots
     if size(num_trn,1) < 500
-        figure; show(num_trn_box);
-        figure; show(num_tst_box);
+        figure; show(numset_trn);
+        figure; show(numset_tst);
     end
    figure; bar([E_nmc,E_nmc_n,E_ldc,E_fis,E_log,E_par]);
    figure; bar([C_nmc;C_nmc_n;C_ldc;C_fis;C_log;C_par]');

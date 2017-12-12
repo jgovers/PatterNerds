@@ -31,7 +31,7 @@ num_trn_box_dwn_gauss   = im_gauss(num_trn_box_dwn, 0.8, 0.8, 'full');      % ga
 numset_trn              = prdataset(num_trn_box_dwn_gauss, getlab(num_trn));% turn datafile to dataset (see documentation for why)
 
 % Testing data
-num_tst                 = prnist([0,1,2,3,4,5,6,7,8,9],[1:10]);             % read in data
+num_tst                 = prnist([0:9],[990:1000]);                         % read in data
 num_tst_box             = im_box(num_tst,[],1);                             % add bounding box to make all images same size
 num_tst_box_dwn         = im_resize(num_tst_box,[25,25]);                   % Downsample
 num_tst_box_dwn_gauss   = im_gauss(num_tst_box_dwn, 0.8, 0.8, 'full');      % gauss-filter over de images om losse pixels te verwijderen
@@ -43,14 +43,9 @@ numset_tst              = prdataset(num_tst_box_dwn_gauss, getlab(num_tst));% tu
 % maar geeft een rare foutmelding....
 % numset_ero = im_berosion(numset, 1, 4, 1);
 
-% showing the preprocessed images
-if doplots
-    figure; show(numset_trn)
-    figure; show(numset_tst)
-end
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
 
 % run class_pixeldata.m
-% run class_features.m
+run class_features.m
 % run class_dissimil.m
