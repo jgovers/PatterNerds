@@ -1,5 +1,6 @@
 %% Feature Extraction
 toc
+disp('Running module FEATURES')
 disp('Extracting training features...')
 x_trn   = im_features(numset_trn,numset_trn,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
 x_trn_n = normc(+x_trn);
@@ -32,7 +33,6 @@ toc
 [E_par,C_par] = testc(x_tst,W_par);
 
 %% Plot
-toc
 if doplots
     if size(num_trn,1) < 500
         figure; show(numset_trn);
@@ -42,4 +42,3 @@ if doplots
    figure; bar([C_nmc;C_nmc_n;C_ldc;C_fis;C_log;C_par]');
    showfigs
 end
-toc

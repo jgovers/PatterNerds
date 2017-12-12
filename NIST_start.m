@@ -22,7 +22,6 @@ prwaitbar off
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
-toc
 % Training data
 num_trn                 = prnist([0:9],[1:10]);                             % read in data
 num_trn_box             = im_box(num_trn,[],1);                             % add bounding box to make all images same size
