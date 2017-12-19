@@ -17,27 +17,25 @@ if firsttime
 end
 
 prwaitbar off
- run('C:\Program Files\DIPimage 2.8.1\dipstart.m') % check if you have
+% run('C:\Program Files\DIPimage 2.8.1\dipstart.m') % check if you have
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
 num = prnist([0,1,2,3,4,5,6,7,8,9],[1:10]); % read in data
 num_box = im_box(num,[],1); % add bounding box to make all images same size
-width = 32;
+width = 32; % afmetingen van de images (x bij y)
 num_box_dwn = im_resize(num_box,[width,width]); % Downsample
 num_box_dwn_gauss = im_gauss(num_box_dwn, 0.8, 0.8, 'full'); % gauss-filter over de images om losse pixels te verwijderen
 numset = prdataset(num_box_dwn_gauss, getlab(num)); % turn datafile to dataset (see documentation for why)
 
 % showing the preprocessed images
 figure; show(numset) 
-show(num_box_dwn)
 
 %% Image Processing
-i = 0;
-image_processed2 = zeros(width, width, length(num_box_dwn));
-%image_processed = zeros(length(num_box_dwn),im_dim^2);
-%numsetzeros = zeros(length(num_box_dwn),im_dim^2);
-%image_set = prdataset(numsetzeros, getlab(num_box_dwn));
+% initialize
+i = 0; 
+image_processed2 = zeros(width, width, length(num_box_dwn)); % set matrix dimensions to improve speed
+
 for i = 1:length(num_box_dwn)
 image = data2im(num_box_dwn(i));
 
@@ -59,18 +57,13 @@ image_clean2 = bwareaopen(image_clean, 5); % remove small blobs of pixels
 
 image_adapt = image_clean2;
 image_processed2(:,:,i) = image_adapt; % store every image in the same matrix
-%im2obj(image_processed);
-%image_set = im2obj(image_skel, image_set);
-%im2obj(image_skel, A);
 
 end
 
 images_processed = im2obj(image_processed2);
 images_processed_gauss = im_gauss(images_processed, 0.8, 0.8, 'full'); % gauss-filter over de images om losse pixels te verwijderen
-numset2 = prdataset(images_processed_gauss, getlab(num_box_dwn));
+numset2 = prdataset(images_processed_gauss, getlab(num_box_dwn)); % nieuwe dataset met bewerkte images
 
-%numset2 = prdataset(image_processed, getlab(num_box_dwn));
-%show(numset2)
 
 
 %% Run the desired classification method
