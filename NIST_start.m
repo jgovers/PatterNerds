@@ -18,12 +18,13 @@ if firsttime
 end
 
 prwaitbar off
+prwarning off
 % run('C:\Program Files\DIPimage 2.8.1\dipstart.m') % check if you have
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
 % Training data
-num_trn                 = prnist([0:9],[1:10]);                             % read in data
+num_trn                 = prnist([0:9],[1:]);                             % read in data
 num_trn_box             = im_box(num_trn,[],1);                             % add bounding box to make all images same size
 num_trn_box_dwn         = im_resize(num_trn_box,[25,25]);                   % Downsample
 num_trn_box_dwn_gauss   = im_gauss(num_trn_box_dwn, 0.8, 0.8, 'full');      % gauss-filter over de images om losse pixels te verwijderen
