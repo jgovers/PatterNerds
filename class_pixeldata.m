@@ -12,7 +12,7 @@ a = my_rep(m);
 
 %% 
 display('training')
-u = knnc([],3);
+u = pcam([],0.9)*parzenc;
 
 
 display('crossvalidating')
