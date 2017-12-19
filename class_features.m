@@ -1,16 +1,44 @@
-%% !!!!! remove clearing if converted to function !!!!!!
-tic
-
-%% Image Processing
-x1 = im_features(num_box,num_box,{'Area','Centroid'});
-x2 = im_features(num_box,num_box,{'Perimeter','Eccentricity','EulerNumber'});
+%% Feature Extraction
 toc
+disp('Running module FEATURES')
+disp('Extracting training features...')
+x_trn   = im_features(numset_trn,numset_trn,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
+x_trn_n = normc(+x_trn);
+x_trn_n = prdataset(x_trn_n,getlab(x_trn));
+
+toc
+disp('Extracting testing features...')
+x_tst   = im_features(numset_tst,numset_tst,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
+x_tst_n = normc(+x_tst);
+x_tst_n = prdataset(x_tst_n,getlab(x_tst));
+
+
+%% Classification
+% Training
+toc
+W_nmc = nmc(x_trn);
+W_nmc_n = nmc(x_trn_n);
+[W_ldc,R_ldc,S_ldc,M_ldc] = ldc(x_trn);
+W_fis = fisherc(x_trn);
+W_log = loglc(x_trn);
+[W_par,H_par] = parzenc(x_trn);
+
+% Testing
+toc
+[E_nmc,C_nmc] = testc(x_tst,W_nmc);
+[E_nmc_n,C_nmc_n] = testc(x_tst_n,W_nmc_n);
+[E_ldc,C_ldc] = testc(x_tst,W_ldc);
+[E_fis,C_fis] = testc(x_tst,W_fis);
+[E_log,C_log] = testc(x_tst,W_log);
+[E_par,C_par] = testc(x_tst,W_par);
 
 %% Plot
 if doplots
-   figure; show(num_box);
-   figure; scatterd(x1,3,'legend')
-   figure; scatterd(x2,3,'legend')
+    if size(num_trn,1) < 500
+        figure; show(numset_trn);
+        figure; show(numset_tst);
+    end
+   figure; bar([E_nmc,E_nmc_n,E_ldc,E_fis,E_log,E_par]);
+   figure; bar([C_nmc;C_nmc_n;C_ldc;C_fis;C_log;C_par]');
    showfigs
 end
-toc
