@@ -12,13 +12,13 @@ a = my_rep(m);
 
 %% 
 display('training')
-u = knnc([],3);
+u = parzenc;
 
-
+%%
 display('crossvalidating')
 eCross = prcrossval(a,u,10,1);
 
-
+%%
 display('benchmark-testing')
 w = a*u;
 e = nist_eval('my_rep',w,100);
