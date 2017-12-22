@@ -5,7 +5,11 @@ a = my_rep(m);
 
 %% 
 display('crossvalidating')
-u = pcam([],0.9)*qdc;
-eCross = prcrossval(a,u,20,1);
-w = a*u;
-e = nist_eval('my_rep',w,100);
+
+var = [0.9 0.91 0.92 0.93 0.94 0.95];
+for i = 1:6
+    u = pcam([],var(i))*parzenc;
+    eCross(i) = prcrossval(a,u,20,1);
+    w = a*u;
+    e(i) = nist_eval('my_rep',w,100);
+end
