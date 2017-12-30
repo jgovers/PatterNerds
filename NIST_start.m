@@ -23,16 +23,20 @@ prwarning off
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
-data = prnist([0,1,2,3,4,5,6,7,8,9],[1:10]); % read in data
+data_trn = prnist([0:9],[1:10]);        % Read in training data
+data_tst = prnist([0:9],[990:1000]); 	% Read in test data
 
 toc
 disp('Preprocessing data in my_rep...')
-a = my_rep(data);
+a_trn = my_rep(data_trn);
+toc
+a_tst = my_rep(data_tst);
 toc
 
 %% Plots
 if doplots
-    figure; show(a);
+    figure; show(a_trn);
+    figure; show(a_tst);
     showfigs
 end
 
