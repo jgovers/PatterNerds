@@ -11,7 +11,7 @@ clc
 tic
 
 firsttime   = false;
-doplots     = true;
+doplots     = false;
 
 if firsttime 
     addpath(genpath(pwd))
@@ -23,20 +23,22 @@ prwarning off
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
-data_trn = prnist([0:9],[1:10]);        % Read in training data
+data_trn = prnist([0:9],[1:4]);        % Read in training data
 data_tst = prnist([0:9],[990:1000]); 	% Read in test data
 
 toc
 disp('Preprocessing data in my_rep...')
 a_trn = my_rep(data_trn);
 toc
-a_tst = my_rep(data_tst);
-toc
+% a_tst = my_rep(data_tst);
+% toc
+
+bbb = savedatafile({a_trn},[16 16 1],'b')
 
 %% Plots
 if doplots
     figure; show(a_trn);
-    figure; show(a_tst);
+%     figure; show(a_tst);
     showfigs
 end
 
