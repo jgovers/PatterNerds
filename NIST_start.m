@@ -23,29 +23,29 @@ prwarning off
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
-% Training data
-num_trn                 = prnist([0:9],[1:]);                             % read in data
-num_trn_box             = im_box(num_trn,[],1);                             % add bounding box to make all images same size
-num_trn_box_dwn         = im_resize(num_trn_box,[25,25]);                   % Downsample
-num_trn_box_dwn_gauss   = im_gauss(num_trn_box_dwn, 0.8, 0.8, 'full');      % gauss-filter over de images om losse pixels te verwijderen
-numset_trn              = prdataset(num_trn_box_dwn_gauss, getlab(num_trn));% turn datafile to dataset (see documentation for why)
+data_trn = prnist([0:9],[1:10]);        % Read in training data
+data_tst = prnist([0:9],[990:1000]); 	% Read in test data
 
-% Testing data
-num_tst                 = prnist([0:9],[990:1000]);                         % read in data
-num_tst_box             = im_box(num_tst,[],1);                             % add bounding box to make all images same size
-num_tst_box_dwn         = im_resize(num_tst_box,[25,25]);                   % Downsample
-num_tst_box_dwn_gauss   = im_gauss(num_tst_box_dwn, 0.8, 0.8, 'full');      % gauss-filter over de images om losse pixels te verwijderen
-numset_tst              = prdataset(num_tst_box_dwn_gauss, getlab(num_tst));% turn datafile to dataset (see documentation for why)
+toc
+disp('Preprocessing data in my_rep...')
+a_trn = my_rep(data_trn);
+toc
+a_tst = my_rep(data_tst);
+toc
 
-% Vanaf 'numset' kunnen allerlei image operations gebruikt worden. Zie de 
-% Lab-manual pagina 113. Hieronder de syntax voor een erosion
-% im_bpropagation lijkt handig om slecht geschreven lijnen te corrigeren,
-% maar geeft een rare foutmelding....
-% numset_ero = im_berosion(numset, 1, 4, 1);
+%% Plots
+if doplots
+    figure; show(a_trn);
+    figure; show(a_tst);
+    showfigs
+end
 
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
 
 % run class_pixeldata.m
-run class_features.m
+% run class_features.m
 % run class_dissimil.m
+
+toc
+disp('Done')
