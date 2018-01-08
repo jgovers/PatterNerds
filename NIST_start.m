@@ -23,17 +23,17 @@ prwarning off
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
-data_trn = prnist([0:9],[1:4]);        % Read in training data
-data_tst = prnist([0:9],[990:1000]); 	% Read in test data
+data = prnist([0:9],[1:end]);        % Read in training data
+% data_tst = prnist([0:9],[990:1000]); 	% Read in test data
 
 toc
 disp('Preprocessing data in my_rep...')
-a_trn = my_rep(data_trn);
+a = my_rep(data);
 toc
 % a_tst = my_rep(data_tst);
 % toc
 
-bbb = savedatafile({a_trn},[16 16 1],'b')
+save('all_processed_images','a')
 
 %% Plots
 if doplots

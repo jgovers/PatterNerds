@@ -10,6 +10,7 @@ num_box_dwn = im_resize(num_box,[width,width]); % Downsample
 image_processed = zeros(width, width, length(num_box_dwn)); % set matrix dimensions to improve speed
 
 for i = 1:length(num_box_dwn)
+    h = waitbar(i/length(num_box_dwn));
     image = data2im(num_box_dwn(i));
 
     %image2 = image(:,[1:2]);
@@ -30,6 +31,7 @@ for i = 1:length(num_box_dwn)
 
     image_processed(:,:,i) = image_clean; % store every image in the same matrix
 end
+close(h)
 obj_processed = im2obj(image_processed);
 obj_processed_gauss = im_gauss(obj_processed, 0.8, 0.8, 'full'); % gauss-filter over de images om losse pixels te verwijderen
 
