@@ -36,7 +36,15 @@ obj_processed = im2obj(image_processed);
 obj_processed_gauss = im_gauss(obj_processed, 0.8, 0.8, 'full'); % gauss-filter over de images om losse pixels te verwijderen
 
 %% End of image processing
-a = prdataset(obj_processed_gauss, getlab(num_box_dwn)); % nieuwe dataset met bewerkte images
+a_raw = prdataset(obj_processed_gauss, getlab(num_box_dwn)); % nieuwe dataset met bewerkte images
+
+% a_feat = im_features(a_raw,a_raw,{'Area','Centroid','ConvexArea','Eccentricity','EquivDiameter','EulerNumber','Extent','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
+% a = a(:,[1,2,3,9:14]);
+a_feat = im_features(a_raw,a_raw,{'Area','Centroid','FilledArea','MajorAxisLength','MinorAxisLength','Orientation','Perimeter','Solidity'});
+
+W_dom = scalem(a_feat,'domain');
+
+a = a_feat*W_dom;
 
 end
 
