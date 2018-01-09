@@ -5,6 +5,14 @@ clc
 tic
 disp('Running module FEATURES')
 load('all_processed_images')
+load('Errormat_ldc','Errormat_ldc')
+load('Errormat_ldc2','Errormat_ldc2')
+load('Errormat_nmc','Errormat_nmc')
+load('Errormat_nmc2','Errormat_nmc2')
+load('Errormat_nmc3','Errormat_nmc3')
+load('Errormat_fis','Errormat_fis')
+load('Errormat_fis3','Errormat_fis3')
+
 doplots = true;
 
 prwaitbar off
@@ -53,35 +61,75 @@ title('Feature selection "Forward" "NN"')
 
 showfigs
 
+%%
+
+Errormat1_ldc = Errormat_ldc;
+Errormat1_ldc(Errormat_ldc == 0) = NaN;
+[minE_ldc,IminE_ldc] = min(Errormat1_ldc);
+
+Errormat1_ldc2 = Errormat_ldc2;
+Errormat1_ldc2(Errormat_ldc2 == 0) = NaN;
+[minE_ldc2,IminE_ldc2] = min(Errormat1_ldc2);
+
+minE_ldc(12:14) = minE_ldc2(12:14);
+
+Errormat1_nmc = Errormat_nmc;
+Errormat1_nmc(Errormat_nmc == 0) = NaN;
+[minE_nmc,IminE_nmc] = min(Errormat1_nmc);
+
+Errormat1_nmc2 = Errormat_nmc2;
+Errormat1_nmc2(Errormat_nmc2 == 0) = NaN;
+[minE_nmc2,IminE_nmc2] = min(Errormat1_nmc2);
+
+Errormat1_nmc3 = Errormat_nmc3;
+Errormat1_nmc3(Errormat_nmc3 == 0) = NaN;
+[minE_nmc3,IminE_nmc3] = min(Errormat1_nmc3);
+
+minE_nmc2(6:14) = minE_nmc3(6:14);
+
+Errormat1_fis = Errormat_fis;
+Errormat1_fis(Errormat_fis == 0) = NaN;
+[minE_fis,IminE_fis] = min(Errormat1_fis);
+
+Errormat1_fis3 = Errormat_fis3;
+Errormat1_fis3(Errormat_fis3 == 0) = NaN;
+[minE_fis3,IminE_fis3] = min(Errormat1_fis3);
+
+minE_fis(9:14) = minE_fis3(9:14);
+
+figure; hold on; plot(minE_fis); plot(minE_ldc); plot(minE_nmc); plot(minE_nmc2); 
+legend('fis','ldc','nmc','nmc norm')
+
+
 %% Classification
 
-E = clevalf(x_trn,fisherc,[3:10],[],1,x_tst,[])
-
-% % Training
-% toc
-% W_nmc = nmc(x_trn);
-% W_nmc_n = nmc(x_trn_n);
-% [W_ldc,R_ldc,S_ldc,M_ldc] = ldc(x_trn);
-% [W_ldc_n,R_ldc_n,S_ldc_n,M_ldc_n] = ldc(x_trn_n);
-% W_fis = fisherc(x_trn);
-% W_fis_n = fisherc(x_trn_n);
-% W_log = loglc(x_trn);
-% W_log_n = loglc(x_trn_n);
-% [W_par,H_par] = parzenc(x_trn_n);
-% [W_par_n,H_par_n] = parzenc(x_trn_n);
+% E = clevalf(x_trn,fisherc,[3:10],[],1,x_tst,[])
 % 
-% % Testing
-% toc
-% [E_nmc,C_nmc] = testc(x_tst,W_nmc);
-% [E_nmc_n,C_nmc_n] = testc(x_tst_n,W_nmc_n);
-% [E_ldc,C_ldc] = testc(x_tst,W_ldc);
-% [E_ldc_n,C_ldc_n] = testc(x_tst_n,W_ldc_n);
-% [E_fis,C_fis] = testc(x_tst,W_fis);
-% [E_fis_n,C_fis_n] = testc(x_tst_n,W_fis_n);
-% [E_log,C_log] = testc(x_tst,W_log);
-% [E_log_n,C_log_n] = testc(x_tst_n,W_log_n);
-% [E_par,C_par] = testc(x_tst,W_par);
-% [E_par_n,C_par_n] = testc(x_tst_n,W_par_n);
+% Training
+toc
+W_nmc = nmc(x_trn);
+W_nmc_n = nmc(x_trn*W_dom);
+[W_ldc,R_ldc,S_ldc,M_ldc] = ldc(x_trn);
+[W_ldc_n,R_ldc_n,S_ldc_n,M_ldc_n] = ldc(x_trn*W_dom);
+W_fis = fisherc(x_trn);
+W_fis_n = fisherc(x_trn*W_dom);
+W_log = loglc(x_trn);
+W_log_n = loglc(x_trn*W_dom);
+[W_par,H_par] = parzenc(x_trn*W_dom);
+[W_par_n,H_par_n] = parzenc(x_trn*W_dom);
+
+% Testing
+toc
+[E_nmc,C_nmc] = testc(x_tst,W_nmc);
+[E_nmc_n,C_nmc_n] = testc(x_tst*W_dom,W_nmc_n);
+[E_ldc,C_ldc] = testc(x_tst,W_ldc);
+[E_ldc_n,C_ldc_n] = testc(x_tst*W_dom,W_ldc_n);
+[E_fis,C_fis] = testc(x_tst,W_fis);
+[E_fis_n,C_fis_n] = testc(x_tst*W_dom,W_fis_n);
+[E_log,C_log] = testc(x_tst,W_log);
+[E_log_n,C_log_n] = testc(x_tst*W_dom,W_log_n);
+[E_par,C_par] = testc(x_tst,W_par);
+[E_par_n,C_par_n] = testc(x_tst*W_dom,W_par_n);
 
 
 %% Plot
@@ -98,8 +146,8 @@ if doplots
     plot(test_dom(:,6))
     legend('cvar','var','2sig','dom')
     
-%    figure; bar([E_nmc,E_nmc_n,E_ldc,E_ldc_n,E_fis,E_fis_n,E_log,E_log_n,E_par,E_par_n]);
-%    figure; bar([C_nmc;C_nmc_n;C_ldc;C_ldc_n;C_fis;C_fis_n;C_log;C_log_n;C_par;C_par_n]');
+   figure; bar([E_nmc,E_nmc_n,E_ldc,E_ldc_n,E_fis,E_fis_n,E_log,E_log_n,E_par,E_par_n]);
+   figure; bar([C_nmc;C_nmc_n;C_ldc;C_ldc_n;C_fis;C_fis_n;C_log;C_log_n;C_par;C_par_n]');
    showfigs
 end
 

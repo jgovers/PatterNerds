@@ -28,8 +28,7 @@ data = prnist([0:9],[1:end]);        % Read in training data
 
 toc
 disp('Preprocessing data in my_rep...')
-a = my_rep(data);
-toc
+% a = my_rep(data);
 % a_tst = my_rep(data_tst);
 % toc
 
@@ -46,7 +45,7 @@ end
 % !! maybe in the future build functions out of each classification method?
 
 % run class_pixeldata.m
-% run class_features.m
+run class_features.m
 % run class_dissimil.m
 
 toc
