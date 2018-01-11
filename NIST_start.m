@@ -10,7 +10,7 @@ close all
 clc
 tic
 
-firsttime   = false;
+firsttime   = true;
 doplots     = true;
 
 if firsttime 
