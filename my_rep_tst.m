@@ -1,4 +1,4 @@
-function [a] = my_rep(data)
+function [a] = my_rep_tst(data)
 global a_trn
 % All the image porcessing is done in this function
 

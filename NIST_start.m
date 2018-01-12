@@ -9,6 +9,7 @@ clear all
 close all
 clc
 tic
+global a_trn
 
 firsttime   = true;
 doplots     = true;
@@ -23,11 +24,20 @@ prwarning off
 % dip-toolbox and download it if you haven't!
 
 %% Load in NIST-data
-data_trn = prnist([0:9],[1:10]);        % Read in training data
-data_tst = prnist([0:9],[990:1000]); 	% Read in test data
-
 toc
+
+Nsamp   = 20;
+Ntrn    = 10;
+Ntst    = Nsamp - Ntrn;
+samp    = randsample(1000,Nsamp);
+samptrn = samp(1:Ntrn)';
+samptst = samp(Ntrn+1:Nsamp)';
+
+data_trn = prnist(0:9,samptrn);     % Read in training data
+data_tst = prnist(0:9,samptst); 	% Read in test data
+
 disp('Preprocessing data in my_rep...')
+a_trn = 0;
 a_trn = my_rep(data_trn);
 toc
 a_tst = my_rep(data_tst);
@@ -39,6 +49,7 @@ if doplots
     figure; show(a_tst);
     showfigs
 end
+nist_eval
 
 %% Run the desired classification method
 % !! maybe in the future build functions out of each classification method?
