@@ -1,6 +1,6 @@
 function [a] = my_rep(data)
-global a_trn
 % All the image porcessing is done in this function
+global W_dis
 
 width = 16;     % afmetingen van de images (x bij y)
 
@@ -35,6 +35,12 @@ obj_processed = im2obj(image_processed);
 obj_processed_gauss = im_gauss(obj_processed, 0.8, 0.8, 'full'); % gauss-filter over de images om losse pixels te verwijderen
 
 %% End of image processing
-a = prdataset(obj_processed_gauss, getlab(num_box_dwn)); % nieuwe dataset met bewerkte images
-a = a_trn;
+a_raw = prdataset(obj_processed_gauss, getlab(num_box_dwn)); % nieuwe dataset met bewerkte images
+
+if isempty(W_dis)
+    W_dis = proxm(a_raw,'c');
+end
+
+a = a_raw*W_dis;   
+
 end

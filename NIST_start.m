@@ -9,10 +9,10 @@ clear all
 close all
 clc
 tic
-global a_trn
+global W_dis
 
-firsttime   = true;
-doplots     = true;
+firsttime   = false;
+doplots     = false;
 
 if firsttime 
     addpath(genpath(pwd))
@@ -37,11 +37,15 @@ data_trn = prnist(0:9,samptrn);     % Read in training data
 data_tst = prnist(0:9,samptst); 	% Read in test data
 
 disp('Preprocessing data in my_rep...')
-a_trn = 0;
+W_dis = [];
 a_trn = my_rep(data_trn);
 toc
 a_tst = my_rep(data_tst);
 toc
+
+%% 
+W_ldc = ldc(a_trn);
+[E_ldc,C_ldc] = testd(a_tst*W_ldc)
 
 %% Plots
 if doplots
@@ -49,14 +53,6 @@ if doplots
     figure; show(a_tst);
     showfigs
 end
-nist_eval
-
-%% Run the desired classification method
-% !! maybe in the future build functions out of each classification method?
-
-% run class_pixeldata.m
-% run class_features.m
-% run class_dissimil.m
 
 toc
 disp('Done')
