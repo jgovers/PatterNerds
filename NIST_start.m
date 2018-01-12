@@ -26,8 +26,8 @@ prwarning off
 %% Load in NIST-data
 toc
 
-Nsamp   = 20;
-Ntrn    = 10;
+Nsamp   = 4;
+Ntrn    = 2;
 Ntst    = Nsamp - Ntrn;
 samp    = randsample(1000,Nsamp);
 samptrn = samp(1:Ntrn)';
@@ -42,10 +42,32 @@ a_trn = my_rep(data_trn);
 toc
 a_tst = my_rep(data_tst);
 toc
+disp('Selecting features')
+% [W_qdc,RES_qdc] = featsellr(a_trn,qdc([]),[],2,1,a_tst);
+% a_trn_qdcm = a_trn*W_qdc;
+% % a_tst_qdcm = a_tst*W_qdc;
+% 
+[W_ldcfeat,RES_ldc] = featsellr(a_trn,ldc([]),[],2,1,a_tst);
+a_trn_ldcm = a_trn*W_ldcfeat;
+a_tst_ldcm = a_tst*W_ldcfeat;
+
+% W_pca = pca(a_trn,21);
+% a_trn_ldcm = a_trn*W_pca;
+% a_tst_ldcm = a_tst*W_pca;
 
 %% 
+toc
+% W_qdc = qdc(a_trn);
+% [E_qdc,C_qdc] = testd(a_tst*W_qdc)
+% 
+% W_qdcm = qdc(a_trn_qdcm);
+% [E_qdcm,C_qdcm] = testd(a_tst_qdcm*W_qdcm)
+
 W_ldc = ldc(a_trn);
 [E_ldc,C_ldc] = testd(a_tst*W_ldc)
+
+W_ldcm = ldc(a_trn_ldcm);
+[E_ldcm,C_ldcm] = testd(a_tst_ldcm*W_ldcm)
 
 %% Plots
 if doplots
