@@ -1,10 +1,12 @@
-function [a] = my_rep(data)
+function [a,b,c,d] = my_rep(data)
 % All the image porcessing is done in this function
 
-width = 16;     % afmetingen van de images (x bij y)
+width = 24;     % afmetingen van de images (x bij y)
 
 num_box = im_box(data,[],1); % add bounding box to make all images same size
+b = num_box;
 num_box_dwn = im_resize(num_box,[width,width]); % Downsample
+c = num_box_dwn;
 
 %% Image processing
 image_processed = zeros(width, width, length(num_box_dwn)); % set matrix dimensions to improve speed
@@ -31,9 +33,10 @@ for i = 1:length(num_box_dwn)
     image_processed(:,:,i) = image_clean; % store every image in the same matrix
 end
 obj_processed = im2obj(image_processed);
-obj_processed_gauss = im_gauss(obj_processed, 0.8, 0.8, 'full'); % gauss-filter over de images om losse pixels te verwijderen
+obj_processed_gauss = im_gauss(obj_processed, 0.6, 0.6, 'full'); % (was 0.8) gauss-filter over de images om losse pixels te verwijderen
 
 %% End of image processing
+d = prdataset(obj_processed, getlab(num_box_dwn));
 a = prdataset(obj_processed_gauss, getlab(num_box_dwn)); % nieuwe dataset met bewerkte images
 
 end

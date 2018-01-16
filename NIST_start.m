@@ -28,7 +28,7 @@ data_tst = prnist([0:9],[990:1000]); 	% Read in test data
 
 toc
 disp('Preprocessing data in my_rep...')
-a_trn = my_rep(data_trn);
+[a_trn, b, c, d] = my_rep(data_trn);
 toc
 a_tst = my_rep(data_tst);
 toc
