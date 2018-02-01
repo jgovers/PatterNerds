@@ -14,12 +14,14 @@ Nloop = length(num_box_dwn);
 
 parfor i = 1:Nloop
     image = data2im(num_box_dwn(i));
-    image_clean = bwmorph(image, 'clean', 2);   % remove single pixels
-    image_clean = bwareaopen(image_clean, 5);   % remove small blobs of pixels
+%     image_clean = bwmorph(image, 'clean', 2);   % remove single pixels
+%     image_clean = bwareaopen(image_clean, 5);   % remove small blobs of pixels
+    image_clean = image;
     image_processed(:,:,i) = image_clean;       % store every image in the same matrix
 end
 obj_processed = im2obj(image_processed);
-obj_processed_gauss = im_gauss(obj_processed, 0.8, 0.8, 'full');    % gauss-filter over de images om losse pixels te verwijderen
+obj_processed_gauss = obj_processed;
+% obj_processed_gauss = im_gauss(obj_processed, 0.8, 0.8, 'full');    % gauss-filter over de images om losse pixels te verwijderen
 
 %% End of image processing
 a_raw = prdataset(obj_processed_gauss, getlab(num_box_dwn));        % nieuwe dataset met bewerkte images
