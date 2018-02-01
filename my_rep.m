@@ -10,7 +10,9 @@ num_box_dwn = im_resize(num_box,[width,width]); % Downsample
 %% Image processing
 image_processed = zeros(width, width, length(num_box_dwn)); % set matrix dimensions to improve speed
 
-for i = 1:length(num_box_dwn)
+Nloop = length(num_box_dwn);
+
+parfor i = 1:Nloop
     image = data2im(num_box_dwn(i));
 
     %image2 = image(:,[1:2]);
