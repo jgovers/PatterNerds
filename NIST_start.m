@@ -45,8 +45,8 @@ a_tst   = my_rep(data_tst);
 toc
 disp('Training and testing classifiers...')
 
-E = zeros(6,99);
-C = zeros(6,10,99);
+E = zeros(1,99);
+C = zeros(1,10,99);
 
 parfor i = 2:100
     
@@ -55,20 +55,20 @@ parfor i = 2:100
     d_tst = a_tst*pcam(a_trn,i);
     
     Wldc = Wpca*ldc([]);
-    Wqdc = Wpca*qdc([]);
-    Wsvc = Wpca*svc([]);
-    Wpar = Wpca*parzenc([]);
-    Wnmc = Wpca*nmc([]);
-    Wknn = Wpca*knnc([]);
+%     Wqdc = Wpca*qdc([]);
+%     Wsvc = Wpca*svc([]);
+%     Wpar = Wpca*parzenc([]);
+%     Wnmc = Wpca*nmc([]);
+%     Wknn = Wpca*knnc([]);
     
-    Ei = zeros(6,1);
-    Ci = zeros(6,10);
+    Ei = zeros(1,1);
+    Ci = zeros(1,10);
     [Ei(1),Ci(1,:)] = testd(d_tst*Wldc);
-    [Ei(2),Ci(2,:)] = testd(d_tst*Wqdc);
-    [Ei(3),Ci(3,:)] = testd(d_tst*Wsvc);
-    [Ei(4),Ci(4,:)] = testd(d_tst*Wpar);
-    [Ei(5),Ci(5,:)] = testd(d_tst*Wnmc);
-    [Ei(6),Ci(6,:)] = testd(d_tst*Wknn);
+%     [Ei(2),Ci(2,:)] = testd(d_tst*Wqdc);
+%     [Ei(3),Ci(3,:)] = testd(d_tst*Wsvc);
+%     [Ei(4),Ci(4,:)] = testd(d_tst*Wpar);
+%     [Ei(5),Ci(5,:)] = testd(d_tst*Wnmc);
+%     [Ei(6),Ci(6,:)] = testd(d_tst*Wknn);
 
     E(:,i) = Ei;
     C(:,:,i) = Ci;
@@ -77,7 +77,7 @@ end
 
 %%
 figure; hold on;
-for i = 1:6
+for i = 1:1
     plot(E(i,:))
 end
 legend('ldc','qdc','svc','parzenc','nmc','knnc')
@@ -85,5 +85,5 @@ legend('ldc','qdc','svc','parzenc','nmc','knnc')
 %%
 % e_ldc = nist_eval('my_rep',W_ldc,100)
 toc
-save('dissim_1-2-1510')
+save('dissim_1-2-1555')
 disp('Done')
